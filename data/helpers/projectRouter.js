@@ -5,7 +5,7 @@ const Projects = require('./projectModel.js');
 const router = express.Router();
 
 router.use((req, res, next) => {
-    console.log('Hubs Router, whoo!')
+    console.log('Project Router, whoo!')
     next();
   })
 
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: 'Error retrieving the posts'
+            message: 'Error retrieving the projects'
         });
     }
 });
@@ -50,6 +50,18 @@ router.delete('/:id', async (req, res) => {
         console.log(error);
         res.status(500).json({
             message: 'Error removing post'
+        });
+    }
+});
+
+router.get('/:id', async (req, res) => {
+    try {
+        const projectActions = await Projects.getProjectActions(req.params.id);
+        res.status(200).json(projectActions); 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Error retrieving the project actions'
         });
     }
 });
